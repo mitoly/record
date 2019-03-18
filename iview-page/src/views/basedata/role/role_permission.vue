@@ -130,14 +130,13 @@
             },
             savePermission:function () {
                 let me = this;
-                debugger;
                 let selectMenu = me.$refs.menuTree.getSelectedNodes();
                 let permissionCode = '';
                 if (selectMenu[0]) {
                     permissionCode = selectMenu[0].code;
                 }
                 let saveMenuIdArr = [];
-                let checkMenu = me.$refs.menuTree.getCheckedNodes();
+                let checkMenu = me.$refs.menuTree.getCheckedAndIndeterminateNodes();
                 checkMenu.forEach(v=>{
                     saveMenuIdArr.push(v.menuId);
                 });

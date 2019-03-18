@@ -1,6 +1,7 @@
 package springboot.masterdata.role.controller;
 
 import com.github.pagehelper.PageInfo;
+import net.sf.json.JSONArray;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,14 +72,16 @@ public class TsRoleController extends BaseController {
         }
 
         String[] saveButtonStrIdsArr = saveButtonIdStr.split(",");
-        Integer[] saveButtonIdsArr = new Integer[saveButtonStrIdsArr.length];
+        Integer[] saveButtonIdsArr = null;
         if (StringUtils.isNotBlank(saveButtonStrIdsArr[0])) {
+            saveButtonIdsArr = new Integer[saveButtonStrIdsArr.length];
             for (int i = 0; i < saveButtonStrIdsArr.length; i++)
                 saveButtonIdsArr[i] = Integer.valueOf(saveButtonStrIdsArr[i]);
         }
         String[] saveTableStrIdsArr = saveTableIdStr.split(",");
-        Integer[] saveTableIdsArr = new Integer[saveTableStrIdsArr.length];
+        Integer[] saveTableIdsArr = null;
         if (StringUtils.isNotBlank(saveTableStrIdsArr[0])) {
+            saveTableIdsArr = new Integer[saveTableStrIdsArr.length];
             for (int i=0; i<saveTableStrIdsArr.length; i++)
                 saveTableIdsArr[i] = Integer.valueOf(saveTableStrIdsArr[i]);
         }

@@ -97,29 +97,17 @@ public class TsRoleServiceImpl extends BaseServiceImpl implements TsRoleService 
     public void savePermission(Integer roleId, String permissionCode, Integer[] menuIdsArr, Integer[] saveButtonIdsArr, Integer[] saveTableIdsArr) {
         // 整理菜单
         List<TsMenu> menuList = menuDao.findMenuByIds(menuIdsArr);
-        Map<String, String> parentMenuMap = new HashMap<String, String>();
-        Iterator it = menuList.iterator();
-        while (it.hasNext()) {
-            TsMenu menu = (TsMenu) it.next();
-            if (StringUtils.isNotBlank(menu.getParentCode())){
-                parentMenuMap.putIfAbsent(menu.getParentCode(), menu.getParentCode()); // 存放父类Code, 因为半选的父类不会传到后台，需要自己整理
-            } else {
-                // 没有父类CODE，说明这里自己是父类菜单，先删除，下面统一进行查询以免重复
-                it.remove();
-            }
-        }
-        // 找到父类的菜单
-        List<TsMenu> parentMenuList = menuDao.findMenuByPermissionCodes(parentMenuMap.values().toArray(new String[parentMenuMap.values().size()]));
-        menuList.addAll(parentMenuList); // 和父类菜单整合准备存入
 
         menuDao.deleteRoleMenu(roleId, null); // 删除所有菜单权限
 
-        List<TrRoleMenu> roleMenuList = new ArrayList<TrRoleMenu>();
-        for (TsMenu menu : menuList) {
-            TrRoleMenu roleMenu = new TrRoleMenu(roleId, menu.getId());
-            roleMenuList.add(roleMenu);
+        if (null != menuList && !menuList.isEmpty()) {
+            List<TrRoleMenu> roleMenuList = new ArrayList<TrRoleMenu>();
+            for (TsMenu menu : menuList) {
+                TrRoleMenu roleMenu = new TrRoleMenu(roleId, menu.getId());
+                roleMenuList.add(roleMenu);
+            }
+            roleMenuDao.insertList(roleMenuList);//roleId, saveMenuIdList.toArray(new Integer[saveMenuIdList.size()])); // 保存权限菜单
         }
-        roleMenuDao.insertList(roleMenuList);//roleId, saveMenuIdList.toArray(new Integer[saveMenuIdList.size()])); // 保存权限菜单
 
         if (StringUtils.isNotBlank(permissionCode)) {
             List<TsPermissionTable> tableList = menuDao.findPermissionTableByParam(null, permissionCode, null, null);
@@ -137,23 +125,27 @@ public class TsRoleServiceImpl extends BaseServiceImpl implements TsRoleService 
             menuDao.deleteRolePermissionButton(roleId, buttonIds.toArray(new Integer[buttonIds.size()]));
         }
 
-        List<TrRolePermissionTable> saveTrPermissionTable = new ArrayList<TrRolePermissionTable>();
-        for(Integer saveTableId : saveTableIdsArr) {
-            TrRolePermissionTable table = new TrRolePermissionTable(roleId, saveTableId);
-            saveTrPermissionTable.add(table);
-        }
-        if (!saveTrPermissionTable.isEmpty()) {
-            rolePermissionTableDao.insertList(saveTrPermissionTable);
+        if (null != saveTableIdsArr) {
+            List<TrRolePermissionTable> saveTrPermissionTable = new ArrayList<TrRolePermissionTable>();
+            for (Integer saveTableId : saveTableIdsArr) {
+                TrRolePermissionTable table = new TrRolePermissionTable(roleId, saveTableId);
+                saveTrPermissionTable.add(table);
+            }
+            if (!saveTrPermissionTable.isEmpty()) {
+                rolePermissionTableDao.insertList(saveTrPermissionTable);
+            }
         }
 
 
-        List<TrRolePermissionButton> saveTrPermissionButton = new ArrayList<TrRolePermissionButton>();
-        for(Integer saveButtonId : saveButtonIdsArr) {
-            TrRolePermissionButton button = new TrRolePermissionButton(roleId, saveButtonId);
-            saveTrPermissionButton.add(button);
-        }
-        if (!saveTrPermissionButton.isEmpty()) {
-            rolePermissionButtonDao.insertList(saveTrPermissionButton);
+        if (null != saveButtonIdsArr) {
+            List<TrRolePermissionButton> saveTrPermissionButton = new ArrayList<TrRolePermissionButton>();
+            for (Integer saveButtonId : saveButtonIdsArr) {
+                TrRolePermissionButton button = new TrRolePermissionButton(roleId, saveButtonId);
+                saveTrPermissionButton.add(button);
+            }
+            if (!saveTrPermissionButton.isEmpty()) {
+                rolePermissionButtonDao.insertList(saveTrPermissionButton);
+            }
         }
 
     }
