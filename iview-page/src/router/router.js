@@ -68,7 +68,7 @@ export const otherRouter = {
 export const appRouter = [
 	{
         path: '/basedata',
-        icon: 'ios-grid-view',
+        icon: 'ios-grid',
         name: 'basedata',
         title: '系统管理',
         component: Main,

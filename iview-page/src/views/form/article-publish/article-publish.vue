@@ -10,7 +10,7 @@
                 <Card>
                     <Form :label-width="80">
                         <FormItem label="文章标题" :error="articleError">
-                            <Input v-model="articleTitle" @on-blur="handleArticletitleBlur" icon="android-list"/>
+                            <Input v-model="articleTitle" @on-blur="handleArticletitleBlur" icon="md-list"/>
                         </FormItem>
                         <div class="article-link-con">
                             <transition name="fixed-link">
@@ -34,17 +34,17 @@
             <Col span="6" class="padding-left-10">
                 <Card>
                     <p slot="title">
-                        <Icon type="paper-airplane"></Icon>
+                        <Icon type="md-paper-plane"></Icon>
                         发布
                     </p>
                     <p class="margin-top-10">
-                        <Icon type="android-time"></Icon>&nbsp;&nbsp;状&nbsp;&nbsp;&nbsp; 态：
+                        <Icon type="md-time"></Icon>&nbsp;&nbsp;状&nbsp;&nbsp;&nbsp; 态：
                         <Select size="small" style="width:90px" value="草稿">
                             <Option v-for="item in articleStateList" :value="item.value" :key="item.value">{{ item.value }}</Option>
                         </Select>
                     </p>
                     <p class="margin-top-10">
-                        <Icon type="eye"></Icon>&nbsp;&nbsp;公开度：&nbsp;<b>{{ Openness }}</b>
+                        <Icon type="ios-eye"></Icon>&nbsp;&nbsp;公开度：&nbsp;<b>{{ Openness }}</b>
                         <Button v-show="!editOpenness" size="small" @click="handleEditOpenness" type="text">修改</Button>
                         <transition name="openness-con">
                             <div v-show="editOpenness" class="openness-radio-con">
@@ -85,13 +85,13 @@
                     <Row class="margin-top-20 publish-button-con">
                         <span class="publish-button"><Button @click="handlePreview">预览</Button></span>
                         <span class="publish-button"><Button @click="handleSaveDraft">保存草稿</Button></span>
-                        <span class="publish-button"><Button @click="handlePublish" :loading="publishLoading" icon="ios-checkmark" style="width:90px;" type="primary">发布</Button></span>
+                        <span class="publish-button"><Button @click="handlePublish" :loading="publishLoading" icon="ios-checkmark-circle-outline" style="width:90px;" type="primary">发布</Button></span>
                     </Row>
                 </Card>
                 <div class="margin-top-10">
                     <Card>
                         <p slot="title">
-                            <Icon type="navicon-round"></Icon>
+                            <Icon type="md-menu"></Icon>
                             分类目录
                         </p>
                         <Tabs type="card">
@@ -115,7 +115,7 @@
                 <div class="margin-top-10">
                     <Card>
                         <p slot="title">
-                            <Icon type="ios-pricetags-outline"></Icon>
+                            <Icon type="ios-pricetags-outline" />
                             标签
                         </p>
                         <Row>

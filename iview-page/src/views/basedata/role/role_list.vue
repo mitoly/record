@@ -14,8 +14,8 @@
                </FormItem>
                 <div style="text-align: right;">
                 	<FormItem>
-		                <Button type="primary" icon="search" @click="handleSearch" style="margin-right: 15px;margin-bottom: 5px;">搜索</Button>
-		                <Button type="primary" icon="refresh" @click="handleRefresh" style="margin-right: 20px;margin-bottom: 5px;">重置</Button>
+		                <Button type="primary" icon="ios-search" @click="handleSearch" style="margin-right: 15px;margin-bottom: 5px;">搜索</Button>
+		                <Button type="primary" icon="ios-refresh" @click="handleRefresh" style="margin-right: 20px;margin-bottom: 5px;">重置</Button>
 	                </FormItem>
 	            </div>
            </Form>
@@ -26,9 +26,9 @@
              	<!--<Button type="primary" @click="showModel = true" :disabled="selections.length<=-1" icon="plus">{{$t('btn.add')}}</Button>-->
              	<!--<Button type="primary" @click="edit" :disabled="selections.length!=1" icon="edit">{{$t('btn.edit')}}</Button>-->
              	<!--<Button type="primary" @click="remove" :disabled="selections.length<1" icon="close-circled">{{$t('btn.del')}}</Button>-->
-                <span @click="showModel = true"><permissionButton :disabled="selections.length<=-1" icon="plus" formPermission="ROLE" permissionCode="ROLE_ADD" :buttonText="$t('btn.add')"></permissionButton></span>
-                <span @click="edit"><permissionButton :disabled="selections.length!=1" icon="edit" formPermission="ROLE" permissionCode="ROLE_EDIT" :buttonText="$t('btn.edit')"></permissionButton></span>
-                <span @click="remove"><permissionButton :disabled="selections.length<1" icon="close-circled" formPermission="ROLE" permissionCode="ROLE_REMOVE" :buttonText="$t('btn.del')"></permissionButton></span>
+                <span @click="showModel = true"><permissionButton :disabled="selections.length<=-1" icon="ios-add" formPermission="ROLE" permissionCode="ROLE_ADD" :buttonText="$t('btn.add')"></permissionButton></span>
+                <span @click="edit"><permissionButton :disabled="selections.length!=1" icon="ios-create" formPermission="ROLE" permissionCode="ROLE_EDIT" :buttonText="$t('btn.edit')"></permissionButton></span>
+                <span @click="remove"><permissionButton :disabled="selections.length<1" icon="ios-trash" formPermission="ROLE" permissionCode="ROLE_REMOVE" :buttonText="$t('btn.del')"></permissionButton></span>
                 <span @click="editPermission"><permissionButton :disabled="selections.length!=1" icon="ios-key" formPermission="ROLE" permissionCode="ROLE_PERMISSION" :buttonText="$t('btn.editPermission')"></permissionButton></span>
              </div>
 			

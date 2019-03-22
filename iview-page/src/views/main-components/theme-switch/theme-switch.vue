@@ -2,14 +2,14 @@
     <div style="display:inline-block;padding:0 6px;">
         <Dropdown trigger="click" @on-click="setTheme">
             <a href="javascript:void(0)">
-                <Icon :style="{marginTop: '-2px', verticalAlign: 'middle'}" color="#495060" :size="18" type="paintbucket"></Icon>
-                <Icon type="arrow-down-b"></Icon>
+                <Icon :style="{marginTop: '-2px', verticalAlign: 'middle'}" color="#495060" :size="18" type="ios-color-fill"></Icon>
+                <Icon type="ios-arrow-dropdown" />
             </a>
             <DropdownMenu slot="list">
                 <DropdownItem v-for="(item, index) in themeList" :key="index" :name="item.name">
                     <Row type="flex" justify="center" align="middle">
-                        <span style="margin-right:10px;"><Icon :size="20" :type="item.name.substr(0, 1) !== 'b' ? 'happy-outline' : 'happy'" :color="item.menu"/></span>
-                        <span><Icon :size="22" type="record" :color="item.element"/></span>
+                        <span style="margin-right:10px;"><Icon :size="20" :type="item.name.substr(0, 1) !== 'b' ? 'ios-happy-outline' : 'ios-happy'" :color="item.menu"/></span>
+                        <span><Icon :size="22" type="ios-egg" :color="item.element"/></span>
                     </Row>
                 </DropdownItem>
             </DropdownMenu>

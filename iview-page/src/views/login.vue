@@ -7,7 +7,7 @@
         <div class="login-con">
             <Card :bordered="false">
                 <p slot="title">
-                    <Icon type="log-in"></Icon>
+                    <Icon type="ios-log-in"></Icon>
                     欢迎登录
                 </p>
                 <div class="form-con">
@@ -15,14 +15,14 @@
                         <FormItem prop="userName">
                             <Input v-model="form.userName" placeholder="请输入用户名">
                                 <span slot="prepend">
-                                    <Icon :size="16" type="person"></Icon>
+                                    <Icon :size="16" type="ios-person"></Icon>
                                 </span>
                             </Input>
                         </FormItem>
                         <FormItem prop="password">
                             <Input type="password" v-model="form.password" placeholder="请输入密码">
                                 <span slot="prepend">
-                                    <Icon :size="14" type="locked"></Icon>
+                                    <Icon :size="14" type="ios-key"></Icon>
                                 </span>
                             </Input>
                         </FormItem>

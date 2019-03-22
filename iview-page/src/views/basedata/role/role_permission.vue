@@ -10,9 +10,9 @@
                 <Checkbox
                         :indeterminate="indeterminateButton"
                         :value="checkAllButton"
-                        @click="handleCheckAll('button')">全选</Checkbox>
+                        @click.prevent.native="handleButtonCheckAll()">全选</Checkbox>
             </div>
-            <CheckboxGroup v-model="checkAllGroupButton" v-for="buttonItem in buttonPermission" @on-change="checkAllGroupChange('button')">
+            <CheckboxGroup v-model="checkAllGroupButton" v-for="buttonItem in buttonPermission" @on-change="checkAllButtonGroupChange()">
                 <Checkbox :label="buttonItem.PERMISSION_NAME" :id="buttonItem.ID"></Checkbox>
             </CheckboxGroup>
         </Col>
@@ -22,9 +22,9 @@
                 <Checkbox
                         :indeterminate="indeterminateTable"
                         :value="checkAllTable"
-                        @click="handleCheckAll('table')">全选</Checkbox>
+                        @click.prevent.native="handleTableCheckAll()">全选</Checkbox>
             </div>
-            <CheckboxGroup v-model="checkAllGroupTable" v-for="tableItem in tablePermission" @on-change="checkAllGroupChange('table')">
+            <CheckboxGroup v-model="checkAllGroupTable" v-for="tableItem in tablePermission" @on-change="checkAllTableGroupChange()">
                 <Checkbox :label="tableItem.PERMISSION_NAME" :id="tableItem.ID"></Checkbox>
             </CheckboxGroup>
         </Col>
@@ -41,8 +41,8 @@
                 baseData: [],
                 menuData: [],
                 roleId:'',
-                indeterminateButton: true,
-                indeterminateTable: true,
+                indeterminateButton: false,
+                indeterminateTable: false,
                 checkAllButton: false,
                 checkAllTable: false,
                 checkAllGroupButton: [],
@@ -58,8 +58,8 @@
         methods: {
             clear: function(){
                 this.baseData = [];
-                this.indeterminateButton= true;
-                this.indeterminateTable= true;
+                this.indeterminateButton= false;
+                this.indeterminateTable= false;
                 this.checkAllButton= false;
                 this.checkAllTable= false;
                 this.checkAllGroupButton= [];
@@ -89,7 +89,6 @@
                 if (selected[0]) {
                     selected = selected[0];
                     commonUtil.doGet(this, "role/findPermissionCheckType", {'permissionTable':selected.code, 'roleId':me.roleId}).then(response => {
-                        debugger;
                         let result = response.data;
                         if(result.success){
                             me.buttonPermission = result.data.buttonPermission;
@@ -104,6 +103,9 @@
                                     me.checkAllGroupTable.push(v.PERMISSION_NAME)
                                 }
                             });
+
+                            me.checkAllButtonGroupChange();
+                            me.checkAllTableGroupChange();
                             me.isShow = true;
                         }
                     });
@@ -111,22 +113,62 @@
                     me.isShow = false;
                 }
             },
-            handleCheckAll (type) {
-                // if (this.indeterminate) {
-                //     this.checkAll = false;
-                // } else {
-                //     this.checkAll = !this.checkAll;
-                // }
-                // this.indeterminate = false;
-                //
-                // if (this.checkAll) {
-                //     this.checkAllGroup = ['香蕉', '苹果', '西瓜'];
-                // } else {
-                //     this.checkAllGroup = [];
-                // }
+            handleButtonCheckAll () {
+                debugger;
+                let me = this;
+                if (me.indeterminateButton) {
+                    me.checkAllButton = false;
+                } else {
+                    me.checkAllButton = !me.checkAllButton;
+                }
+                me.indeterminateButton = false;
+
+                me.checkAllGroupButton = [];
+                if (me.checkAllButton) {
+                    me.buttonPermission.forEach(v=>{
+                        me.checkAllGroupButton.push(v.PERMISSION_NAME)
+                    });
+                }
             },
-            checkAllGroupChange(type) {
-                let a = this.checkAllGroupButton
+            checkAllButtonGroupChange() {
+                if (this.checkAllGroupButton.length == this.buttonPermission.length) {
+                    this.indeterminateButton = false;
+                    this.checkAllButton = true;
+                } else if (this.checkAllGroupButton.length > 0 ) {
+                    this.indeterminateButton = true;
+                    this.checkAllButton = false;
+                } else {
+                    this.indeterminateButton = false;
+                    this.checkAllButton = false;
+                }
+            },
+            handleTableCheckAll () {
+                let me = this;
+                if (me.indeterminateTable) {
+                    me.checkAllTable = false;
+                } else {
+                    me.checkAllTable = !me.checkAllTable;
+                }
+                me.indeterminateTable = false;
+
+                me.checkAllGroupTable = [];
+                if (me.checkAllTable) {
+                    me.tablePermission.forEach(v=>{
+                        me.checkAllGroupTable.push(v.PERMISSION_NAME)
+                    });
+                }
+            },
+            checkAllTableGroupChange() {
+                if (this.checkAllGroupTable.length == this.tablePermission.length) {
+                    this.indeterminateTable = false;
+                    this.checkAllTable = true;
+                } else if (this.checkAllGroupTable.length > 0 ) {
+                    this.indeterminateTable = true;
+                    this.checkAllTable = false;
+                } else {
+                    this.indeterminateTable = false;
+                    this.checkAllTable = false;
+                }
             },
             savePermission:function () {
                 let me = this;

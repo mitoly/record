@@ -23,7 +23,7 @@
             <div class="main-header">
                 <div class="navicon-con">
                     <Button :style="{transform: 'rotateZ(' + (this.shrink ? '-90' : '0') + 'deg)'}" type="text" @click="toggleClick">
-                        <Icon type="navicon" size="32"></Icon>
+                        <Icon type="ios-menu" size="32"></Icon>
                     </Button>
                 </div>
                 <div class="header-middle-con">
@@ -42,7 +42,7 @@
                             <Dropdown transfer trigger="click" @on-click="handleClickUserDropdown">
                                 <a href="javascript:void(0)">
                                     <span class="main-user-name">{{ userName }}</span>
-                                    <Icon type="arrow-down-b"></Icon>
+                                    <Icon type="ios-arrow-down"></Icon>
                                 </a>
                                 <DropdownMenu slot="list">
                                     <DropdownItem name="ownSpace">个人中心</DropdownItem>

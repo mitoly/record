@@ -9,7 +9,7 @@
             <Menu mode="horizontal" theme="dark" active-name="1">
                 <div class="preview-header-nav">
                     <MenuItem name="1">
-                        <Icon type="ios-navigate"></Icon>
+                        <Icon type="ios-navigate" />
                         导航一
                     </MenuItem>
                     <MenuItem name="2">
@@ -32,7 +32,7 @@
                 <div>
                     <Card>
                         <h1>{{ articleTitle }}</h1>
-                        <p class="preview-publish-time"><Icon type="android-alarm-clock"></Icon>&nbsp;发布时间：{{ publishTime }}</p>
+                        <p class="preview-publish-time"><Icon type="md-alarm"></Icon>&nbsp;发布时间：{{ publishTime }}</p>
                         <div class="preview-tags-con">
                             <b class="preview-tip"><Icon type="ios-pricetags-outline"></Icon>&nbsp;标签：</b><Tag v-for="item in tagsList" type="border" color="blue" :key="item">{{ item }}</Tag>
                         </div>

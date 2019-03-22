@@ -14,8 +14,8 @@
                </FormItem>
                 <div style="text-align: right;">
                 	<FormItem>
-		                <Button type="primary" icon="search" @click="handleSearch" style="margin-right: 15px;margin-bottom: 5px;">搜索</Button>
-		                <Button type="primary" icon="refresh" @click="handleRefresh" style="margin-right: 20px;margin-bottom: 5px;">重置</Button>
+		                <Button type="primary" icon="ios-search" @click="handleSearch" style="margin-right: 15px;margin-bottom: 5px;">搜索</Button>
+		                <Button type="primary" icon="ios-refresh" @click="handleRefresh" style="margin-right: 20px;margin-bottom: 5px;">重置</Button>
 	                </FormItem>
 	            </div>
            </Form>
@@ -23,9 +23,9 @@
         
          <div class="list">
              <div class="operations">
-                 <span @click="showModel = true"><permissionButton :disabled="selections.length<=-1" icon="plus" formPermission="USER" permissionCode="USER_ADD" :buttonText="$t('btn.add')"></permissionButton></span>
-                 <span @click="edit"><permissionButton :disabled="selections.length!=1" icon="edit" formPermission="USER" permissionCode="USER_EDIT" :buttonText="$t('btn.edit')"></permissionButton></span>
-                 <span @click="remove"><permissionButton :disabled="selections.length<1" icon="close-circled" formPermission="USER" permissionCode="USER_REMOVE" :buttonText="$t('btn.del')"></permissionButton></span>
+                 <span @click="showModel = true"><permissionButton :disabled="selections.length<=-1" icon="ios-add" formPermission="USER" permissionCode="USER_ADD" :buttonText="$t('btn.add')"></permissionButton></span>
+                 <span @click="edit"><permissionButton :disabled="selections.length!=1" icon="ios-create" formPermission="USER" permissionCode="USER_EDIT" :buttonText="$t('btn.edit')"></permissionButton></span>
+                 <span @click="remove"><permissionButton :disabled="selections.length<1" icon="ios-trash" formPermission="USER" permissionCode="USER_REMOVE" :buttonText="$t('btn.del')"></permissionButton></span>
              </div>
 			
 			<div style="overflow:scroll;" class="paging">
