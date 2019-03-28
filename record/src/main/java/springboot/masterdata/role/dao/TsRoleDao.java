@@ -1,12 +1,14 @@
 package springboot.masterdata.role.dao;
 
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.jdbc.SQL;
 import springboot.base.dao.BaseMapper;
 import springboot.masterdata.role.entity.TsRole;
 import springboot.masterdata.role.vo.RoleVo;
 import springboot.masterdata.user.vo.UserVo;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface TsRoleDao extends BaseMapper<TsRole> {
@@ -74,4 +76,23 @@ public interface TsRoleDao extends BaseMapper<TsRole> {
 			"	t.ID IN (${ids}) ")
 	void remove(@Param("ids") String ids, @Param("userVo") UserVo userVo);
 
+	@SelectProvider(type = RoleDaoProvider.class, method = "findRoleCheckType")
+    List<Map<String, Object>> findRoleCheckType(Integer userId);
+
+	class RoleDaoProvider {
+		public String findRoleCheckType (Integer userId) {
+			return new SQL(){
+				{
+					SELECT("tr.ID, tr.ROLE_CODE, tr.ROLE_NAME, t.ROLE_ID AS CHECKROLE");
+					FROM("ts_role tr");
+					LEFT_OUTER_JOIN("(SELECT * " +
+							"	FROM tr_user_role tur " +
+							" 	where tur.user_id = " + userId + ") t " +
+							" ON tr.ID = t.ROLE_ID ");
+					WHERE(" tr.MARK_FOR_DELETE = '0' ");
+				}
+			}.toString();
+		}
+
+	}
 }

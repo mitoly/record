@@ -9,6 +9,8 @@ import springboot.masterdata.user.vo.UserVo;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 
 public interface TsRoleService extends BaseService {
@@ -30,4 +32,11 @@ public interface TsRoleService extends BaseService {
     void remove(String ids, UserVo currentUser);
 
     void savePermission(Integer roleId, String permissionCode, Integer[] menuIdsArr, Integer[] saveButtonIdsArr, Integer[] saveTableIdsArr);
+
+    /**
+     * 查询出所有角色，通过字段checkType是否有值来判断改用户是否选择该角色
+     * @param userId 用户Id
+     * @return
+     */
+    List<Map<String, Object>> findRoleCheckType(Integer userId);
 }

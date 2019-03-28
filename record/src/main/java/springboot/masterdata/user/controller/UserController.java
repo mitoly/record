@@ -136,21 +136,36 @@ public class UserController extends BaseController {
 		return ActionUtil.sendResult(userVo);
 	}
 
-	@GetMapping("/test")
-	public List<RoleVo> test(HttpSession session, Integer userId){
-		List<RoleVo> roles = userService.findRoleByUserId(userId);
-		UserVo user = (UserVo) session.getAttribute(ConstantUtils.CURRENT_USER);
-		return roles;
-	}
-	
-	@GetMapping("/test1")
-	public UserVo test(String account){
-		UserVo userVo = userService.findUserByAccount(account);
-		return userVo;
+	/**
+	 * 获取用户角色 权限设置状态
+	 * @param userId
+	 * @return
+	 */
+	@GetMapping("/findRoleCheckType")
+	public JsonObjectResult findRoleCheckType(Integer userId){
+		List<Map<String, Object>> roleList = roleService.findRoleCheckType(userId);
+		return ActionUtil.sendResult(roleList);
 	}
 
 	/**
-	 * 处理权限
+	 * 保存用户与角色的权限
+	 * @return
+	 */
+	@PostMapping("/savePermission")
+	public JsonObjectResult savePermission(Integer userId, String targetRoleData) {
+		String[] strArr = targetRoleData.split(",");
+		Integer[] saveRoleArr = null;
+		if (StringUtils.isNotBlank(strArr[0])) {
+			saveRoleArr = new Integer[strArr.length];
+			for (int i = 0; i < strArr.length; i++)
+				saveRoleArr[i] = Integer.valueOf(strArr[i]);
+		}
+		userService.savePermission(userId, saveRoleArr);
+		return ActionUtil.sendResult();
+	}
+
+	/**
+	 * 登入处理权限
 	 * @param tableMap
 	 * @param permissionTables
 	 */
@@ -163,6 +178,30 @@ public class UserController extends BaseController {
 				return set;
 			});
 		}
+	}
+
+
+
+
+
+
+
+
+
+
+	/*--------------------------------------------------------------*/
+
+	@GetMapping("/test")
+	public List<RoleVo> test(HttpSession session, Integer userId){
+		List<RoleVo> roles = userService.findRoleByUserId(userId);
+		UserVo user = (UserVo) session.getAttribute(ConstantUtils.CURRENT_USER);
+		return roles;
+	}
+	
+	@GetMapping("/test1")
+	public UserVo test(String account){
+		UserVo userVo = userService.findUserByAccount(account);
+		return userVo;
 	}
 
 	public static void main(String[] str){

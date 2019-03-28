@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springboot.base.entity.QueryCriteria;
 import springboot.base.service.impl.BaseServiceImpl;
+import springboot.masterdata.role.dao.TrUserRoleDao;
 import springboot.masterdata.role.dao.TsRoleDao;
+import springboot.masterdata.role.entity.TrUserRole;
 import springboot.masterdata.role.vo.RoleVo;
 import springboot.masterdata.user.dao.TsUserDao;
 import springboot.masterdata.user.entity.TsUser;
@@ -18,6 +20,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +31,8 @@ public class TsUserServiceImpll extends BaseServiceImpl implements TsUserService
 	private TsRoleDao roleDao;
 	@Autowired
 	private TsUserDao userDao;
+	@Autowired
+	private TrUserRoleDao trUserRoleDao;
 	
 //	@Override
 //	public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
@@ -104,6 +109,21 @@ public class TsUserServiceImpll extends BaseServiceImpl implements TsUserService
 		user.setUpdateUser(currentUser.getId());
 		user.setOptCounter(null != user.getOptCounter()?user.getOptCounter()+1: 1); //修改次数统计
 		this.update(user);
+	}
+
+	@Override
+	public void savePermission(Integer userId, Integer[] saveRoleArr) {
+		Example example = new Example(TrUserRole.class);
+		Example.Criteria criteria = example.createCriteria();
+		criteria.andCondition("USER_ID =", userId);
+		trUserRoleDao.deleteByExample(example);
+		if (saveRoleArr.length > 0) {
+			List<TrUserRole> userRoleList = new ArrayList<TrUserRole>();
+			for (Integer roleId : saveRoleArr){
+				userRoleList.add(new TrUserRole(userId, roleId));
+			}
+			trUserRoleDao.insertList(userRoleList);
+		}
 	}
 
 }

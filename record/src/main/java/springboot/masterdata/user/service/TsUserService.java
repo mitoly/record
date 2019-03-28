@@ -35,4 +35,6 @@ public interface TsUserService {
 	void addUser(HttpServletRequest request, HttpServletResponse response, TsUser user);
 
 	void editUser(HttpServletRequest request, HttpServletResponse response, TsUser user);
+
+    void savePermission(Integer userId, Integer[] saveRoleArr);
 }

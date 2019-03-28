@@ -149,4 +149,9 @@ public class TsRoleServiceImpl extends BaseServiceImpl implements TsRoleService 
         }
 
     }
+
+    @Override
+    public List<Map<String, Object>> findRoleCheckType(Integer userId) {
+        return roleDao.findRoleCheckType(userId);
+    }
 }
