@@ -26,6 +26,7 @@
                  <span @click="showModel = true"><permissionButton :disabled="selections.length<=-1" icon="ios-add" formPermission="USER" permissionCode="USER_ADD" :buttonText="$t('btn.add')"></permissionButton></span>
                  <span @click="edit"><permissionButton :disabled="selections.length!=1" icon="ios-create" formPermission="USER" permissionCode="USER_EDIT" :buttonText="$t('btn.edit')"></permissionButton></span>
                  <span @click="remove"><permissionButton :disabled="selections.length<1" icon="ios-trash" formPermission="USER" permissionCode="USER_REMOVE" :buttonText="$t('btn.del')"></permissionButton></span>
+                 <span @click="editPermission"><permissionButton :disabled="selections.length!=1" icon="ios-key" formPermission="USER" permissionCode="USER_PERMISSION" :buttonText="$t('btn.editPermission')"></permissionButton></span>
              </div>
 			
 			<div style="overflow:scroll;" class="paging">
@@ -39,6 +40,9 @@
             <Modal v-model="showModel" :loading="loading" @on-ok="modelOk" @on-cancel="modelClose" width="600px" :title='title'>
                 <UserModel ref="userModel" :editData="this.editData" v-on:callParent="callParent"/>
             </Modal>
+            <Modal v-model="showPermissionModel" :loading="loading" @on-ok="permissionModelOk" @on-cancel="permissionModelClose" width="800px" :title='title'>
+                <PermissionModel ref="permissionModel" :editData="this.editData" v-on:permissionCallParent="permissionCallParent"/>
+            </Modal>
         </div>
     </div>
 </template>
@@ -47,7 +51,8 @@
 	
 import commonUtil from '@/libs/commonUtil';
 import UserModel from "./user_model.vue";
-	
+import PermissionModel from "./user_permission.vue";
+
 export default {
     name: 'user_list',
     data () {
@@ -62,6 +67,7 @@ export default {
         		currentPage:1,
                 editData:false,
                 showModel:false,
+                showPermissionModel:false,
                 listDatas: [],
                 searchForm: {
                     account:'',
@@ -147,9 +153,9 @@ export default {
         handleSearch:function(){
         	commonUtil.loadData(this);
         },
-				handleRefresh:function(){
-					commonUtil.refresh(this);
-				},
+        handleRefresh:function(){
+            commonUtil.refresh(this);
+        },
         edit:function(){
             let me=this;
          	this.title='编辑';
@@ -182,12 +188,43 @@ export default {
             }else if(type=='MaintainOk'){
                this.showModel=false;
                 commonUtil.loadData(this);
-                this.selections = [];
             }
         },
         remove:function(){
         	commonUtil.deleteData(this, '/user/remove');
-        }
+        },
+        editPermission: function () {
+            let me=this;
+            this.title='用户权限';
+            let ids= commonUtil.getSelectedIds(this.selections,true);
+            if(ids){
+                commonUtil.doGet(this, "/user/findRoleCheckType",{'userId':ids[0]}).then(function(response){
+                    let result = response.data;
+                    if(result.success){
+                        me.$refs.permissionModel.initData(result.data, ids[0]);
+                        me.showPermissionModel = true;
+                    }
+                });
+            }
+        },
+        permissionModelOk: function(){
+            this.$refs.permissionModel.submit();
+        },
+        permissionModelClose:function(){
+            this.showPermissionModel=false;
+            this.$refs.permissionModel.clearData();
+        },
+        permissionCallParent:function (data,type) {//子页面调用父页面的方法
+            if (type=='ToggleLoading'){
+                this.loading=data;
+                this.$nextTick(() => {
+                    this.loading = true;
+                });
+
+            }else if(type=='MaintainOk'){
+                this.permissionModelClose();
+            }
+        },
     },
     mounted() {
     	commonUtil.loadData(this);
@@ -195,6 +232,6 @@ export default {
     created () {
         this.getData();
     },
-    components: { 'UserModel':UserModel}//自定义组件
+    components: { 'UserModel':UserModel, 'PermissionModel':PermissionModel}//自定义组件
 };
 </script>

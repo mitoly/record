@@ -160,15 +160,14 @@ export default {
             }else if(type=='MaintainOk'){
                this.showModel=false;
                 commonUtil.loadData(this);
-                this.selections = [];
             }
         },
         remove:function(){
         	commonUtil.deleteData(this, '/role/remove');
         },
         editPermission: function () {
-            var me=this;
-            this.title='编辑';
+            let me=this;
+            this.title='权限设置';
             let ids= commonUtil.getSelectedIds(this.selections,true);
             if(ids){
                 commonUtil.doGet(this, "/role/findMenusCheckType",{'onlyParent':false,'roleId':ids[0],'parentCode':''}).then(function(response){

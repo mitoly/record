@@ -41,7 +41,6 @@
             };
 
             return {
-                s:'',
                 loading:true,
                 genderSelectList:[],
                 modelForm:{
