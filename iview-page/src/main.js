@@ -20,6 +20,8 @@ Vue.use(iView);
 Vue.component('permissionTable', permissionTable);
 Vue.component('permissionButton', permissionButton);
 
+window.commonUtil = commonUtil;
+
 new Vue({
     el: '#app',
     router: router,

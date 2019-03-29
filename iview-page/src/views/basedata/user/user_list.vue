@@ -49,7 +49,7 @@
 
 <script>
 	
-import commonUtil from '@/libs/commonUtil';
+// import commonUtil from '@/libs/commonUtil';
 import UserModel from "./user_model.vue";
 import PermissionModel from "./user_permission.vue";
 
@@ -134,7 +134,7 @@ export default {
         },
     methods: {
         getData () {
-        	
+
         },
         pageSizeOnchange:function(val){
     		this.currentPage = 1;
