@@ -18,7 +18,7 @@ import springboot.base.fileter.AccessControlFilter;
  * @author mitol
  *
  */
-@EnableCaching
+@EnableCaching // 开启高速缓存，具体功能百度
 @SpringBootApplication //等同于 @Configuration @EnableAutoConfiguration @ComponentScanpublic
 public class SpringbootApplication implements ServletContextInitializer {
 

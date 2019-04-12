@@ -16,9 +16,10 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     /**
      * 配置拦截器，需要继承WebMvcConfigurerAdapter
      */
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(checkLoginInterceptor)
         	.excludePathPatterns("/user/login");
     }
-	
+
 }
