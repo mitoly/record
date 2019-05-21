@@ -16,9 +16,10 @@ import javax.xml.ws.Endpoint;
 @Configuration
 public class CxfConfig {
 
+    // 方法名不能使用dispatchServlet，会覆盖默认的启动项
     @Bean
-    public ServletRegistrationBean dispatcherServlet() {
-        return new ServletRegistrationBean(new CXFServlet(),"/ws/user/*");
+    public ServletRegistrationBean disServlet() {
+        return new ServletRegistrationBean(new CXFServlet(),"/ws/*");
     }
 
     @Bean(name = Bus.DEFAULT_BUS_ID)
@@ -34,7 +35,7 @@ public class CxfConfig {
     @Bean
     public Endpoint endpoint() {
         EndpointImpl endpoint = new EndpointImpl(springBus(), userWebService());
-        endpoint.publish("/api");
+        endpoint.publish("/userApi");
         return endpoint;
     }
 
