@@ -151,7 +151,6 @@
                     // 退出登录
                     this.$store.commit('logout', this);
                     this.$store.commit('clearOpenedSubmenu');
-                    commonUtil.destory();
                     this.$router.push({
                         name: 'login'
                     });

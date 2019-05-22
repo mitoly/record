@@ -17,10 +17,6 @@ function init(entrys) {
 	Cookies.set('dict', dictEntrys);
 }
 
-function destory(){
-	
-}
-
 /**
  * 获取字典表中的entryName 国际化部分还没做
  * @param {Object} typeCode 
@@ -53,7 +49,6 @@ function getDictEntry(typeCode){
 export default
 {
     init,
-    destory,
     getValue,
     getDictEntry
 };

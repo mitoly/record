@@ -216,11 +216,6 @@ function init(result){
 	}
     Cookies.set('access', menusPermission.join(','));
 	dict.init(result.data.dict);
-	dict.init
-}
-
-function destory(){
-	dict.destory();
 }
 
 export default{
@@ -237,5 +232,4 @@ export default{
 	getSelectedIds,
 	clearFormItem,
 	init,
-	destory
 };
