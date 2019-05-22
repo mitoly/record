@@ -1,29 +1,19 @@
 package springboot.masterdata.dict.entity;
 
-import springboot.base.entity.OptAbstractEntity;
+import springboot.base.entity.VersionAbstractEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
 
 @Table(name = "TS_DICT_ENTRT")
-public class TsDictEntry extends OptAbstractEntity {
+public class TsDictEntry extends VersionAbstractEntity {
 
-    private Integer id;
     private Integer typeId;
     private String entryCode;
     private String entryName;
     private String entryNameEn;
     /**排序顺位*/
     private Integer orderNo;
-
-    @Column(name = "ID")
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     @Column(name = "TYPE_ID")
     public Integer getTypeId() {

@@ -110,8 +110,12 @@ public class UserController extends BaseController {
 		if(!isValid.getId().equals(before.getId())){
 			return ActionUtil.sendResult("账户已存在！", false);
 		}
-		BeanUtils.copyProperties(before, user, "account", "userName", "phone", "email", "gender");
-		userService.editUser(request, response, user);
+		BeanUtils.copyProperties(before, user, "account", "userName", "phone", "email", "gender", "optCounter");
+		try {
+			userService.editUser(request, response, user);
+		} catch (RuntimeException e) {
+			return ActionUtil.sendResult(e.getMessage(), false);
+		}
 		return ActionUtil.sendResult();
 	}
 

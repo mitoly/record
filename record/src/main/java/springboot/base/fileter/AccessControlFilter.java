@@ -28,8 +28,7 @@ public class AccessControlFilter implements javax.servlet.Filter{
 		HttpServletResponse response = (HttpServletResponse) res;
 		String originHeader = request.getHeader("Origin");
 		if(Arrays.asList(ALLOW_DOMAIN).contains(originHeader)){
-			String curOrigin = request.getHeader("Origin");
-			System.out.println("###跨域过滤器->当前访问来源->"+curOrigin+"###");
+			System.out.println("###跨域过滤器->当前访问来源->"+originHeader+"###");
 			//跨域设置  如果要做细的限制，仅限某域名下的可以进行跨域访问到此，可以将*改为对应的域名。
 			response.setHeader("Access-Control-Allow-Origin", originHeader); //originHeader
 			response.setHeader("Access-Control-Allow-Methods", "*");

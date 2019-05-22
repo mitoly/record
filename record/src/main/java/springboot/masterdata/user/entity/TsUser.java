@@ -14,9 +14,7 @@ import java.util.Date;
 public class TsUser extends AbstractEntity {
 
 	private static final long serialVersionUID = 2607630853425714968L;
-	@Id
-	@GeneratedValue(generator = "JDBC")
-	private Integer id;
+
 	private String account;
 	private String password;
 	private String historyPwd;
@@ -27,14 +25,7 @@ public class TsUser extends AbstractEntity {
 	private Date lastLoginDate;
 	private String isEnabled;
 
-	@Column(name = "ID")
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
+
 	@Column(name = "ACCOUNT")
 	public String getAccount() {
 		return account;

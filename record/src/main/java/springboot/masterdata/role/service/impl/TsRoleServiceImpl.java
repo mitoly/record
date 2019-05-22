@@ -77,6 +77,7 @@ public class TsRoleServiceImpl extends BaseServiceImpl implements TsRoleService 
         role.setMarkForDelete(ConstantUtils.ENABLED);
         role.setCreateTime(DateUtils.getCurrentDate());
         role.setCreateUser(super.getCurrentUser(request, response).getId());
+        role.setOptCounter(0);
         roleDao.insert(role);
     }
 
@@ -84,8 +85,7 @@ public class TsRoleServiceImpl extends BaseServiceImpl implements TsRoleService 
     public void editRole(HttpServletRequest request, HttpServletResponse response, TsRole role) {
         role.setUpdateTime(DateUtils.getCurrentDate());
         role.setUpdateUser(super.getCurrentUser(request, response).getId());
-        role.setOptCounter(null != role.getOptCounter()?role.getOptCounter()+1: 1); //修改次数统计
-        roleDao.updateByPrimaryKey(role);
+        roleDao.updateByPrimaryKeyWithVersion(role);
     }
 
     @Override

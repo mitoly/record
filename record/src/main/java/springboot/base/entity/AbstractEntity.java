@@ -1,15 +1,13 @@
 package springboot.base.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-public abstract class AbstractEntity extends OptAbstractEntity implements Serializable{
+public abstract class AbstractEntity extends VersionAbstractEntity implements Serializable{
 
 	private Integer createUser;
 	private Date createTime;

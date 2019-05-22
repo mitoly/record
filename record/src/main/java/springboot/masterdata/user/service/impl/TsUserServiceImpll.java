@@ -99,16 +99,16 @@ public class TsUserServiceImpll extends BaseServiceImpl implements TsUserService
 		user.setIsEnabled(ConstantUtils.YES); //默认为启用
 		user.setCreateTime(new Date());
 		user.setCreateUser(userVo.getId());
+		user.setOptCounter(0);
 		this.save(user);
 	}
 
 	@Override
-	public void editUser(HttpServletRequest request, HttpServletResponse response, TsUser user) {
+	public void editUser(HttpServletRequest request, HttpServletResponse response, TsUser user){
 		UserVo currentUser = super.getCurrentUser(request, response);
 		user.setUpdateTime(new Date());
 		user.setUpdateUser(currentUser.getId());
-		user.setOptCounter(null != user.getOptCounter()?user.getOptCounter()+1: 1); //修改次数统计
-		this.update(user);
+		userDao.updateByPrimaryKeyWithVersion(user);
 	}
 
 	@Override

@@ -8,5 +8,18 @@ import tk.mybatis.mapper.common.MySqlMapper;
  * @author mitol
  */
 public interface BaseMapper<T> extends Mapper<T>, MySqlMapper<T> {
-	
+
+    /**
+     *
+     * @param t
+     * @return
+     * @throws RuntimeException
+     */
+    default int updateByPrimaryKeyWithVersion (T t) throws RuntimeException {
+        int result = updateByPrimaryKey(t);
+        if (0 == result) {
+            throw new RuntimeException("更新失败，数据过期");
+        }
+        return result;
+    }
 }
