@@ -79,7 +79,7 @@
             	loading:true,
             	genderSelectList:[],
                 modelForm:{
-                	account:'', userName:'', phone:'', email:'', gender:''
+                	account:'', userName:'', phone:'', email:'', gender:'',optCounter:''
                 },
                 ruleInline:{
                     account:[
@@ -146,7 +146,8 @@
             	this.modelForm.userName = val.userName;
             	this.modelForm.phone = val.phone;
             	this.modelForm.email = val.email;
-            	this.modelForm.gender = val.gender; 
+            	this.modelForm.gender = val.gender;
+                this.modelForm.optCounter = val.optCounter;
             }
         }
     };

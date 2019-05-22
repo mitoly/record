@@ -186,7 +186,7 @@ export default {
                 });
 
             }else if(type=='MaintainOk'){
-               this.showModel=false;
+                this.modelClose();
                 commonUtil.loadData(this);
             }
         },

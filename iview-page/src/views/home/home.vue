@@ -260,10 +260,7 @@ export default {
         }
     },
     mounted(){
-        debugger;
         this.currentUser = JSON.parse(Cookies.get('curryUser'));
-        let a = this.currentUser.lastLoginDate;
-        let i = 9;
     }
 };
 </script>

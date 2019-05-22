@@ -13,8 +13,8 @@
                     :open-names="openedSubmenuArr"
                     :menu-list="menuList">
                     <div slot="top" class="logo-con">
-                        <img v-show="!shrink"  src="../images/logo.jpg" key="max-logo" />
-                        <img v-show="shrink" src="../images/logo-min.jpg" key="min-logo" />
+                        <img v-show="!shrink" src="../images/logo-admin.jpg" key="max-logo" />
+                        <img v-show="shrink" src="../images/logo-admin-min.jpg" key="min-logo" />
                     </div>
                 </shrinkable-menu>
             </scroll-bar>
@@ -132,7 +132,7 @@
                 if (pathArr.length >= 2) {
                     this.$store.commit('addOpenSubmenu', pathArr[1].name);
                 }
-                this.userName = Cookies.get('user');
+                this.userName = Cookies.get('userName');
                 let messageCount = 3;
                 this.messageCount = messageCount.toString();
                 this.checkTag(this.$route.name);

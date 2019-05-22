@@ -199,8 +199,8 @@ function init(result){
 	let userVo = result.data.userVo;
     let permissionTable = result.data.permissionTable;
     let permissionButton = result.data.permissionButton;
-	// Cookies.set('curryUser', userVo);
-	Cookies.set('user', userVo.userName);
+	Cookies.set('curryUser', userVo);
+	Cookies.set('userName', userVo.userName);
 	Cookies.set('permissionTable', permissionTable);
     Cookies.set('permissionButton', permissionButton);
 	let menusPermission = [];

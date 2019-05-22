@@ -82,7 +82,7 @@ export default {
             }
             let path = '';
             let themeLink = document.querySelector('link[name="theme"]');
-            let userName = Cookies.get('user');
+            let userName = Cookies.get('userName');
             if (localStorage.theme) {
                 let themeList = JSON.parse(localStorage.theme);
                 let index = 0;
@@ -133,7 +133,7 @@ export default {
         } else {
             path = 'dist/';
         }
-        let name = Cookies.get('user');
+        let name = Cookies.get('userName');
         if (localStorage.theme) {
             let hasThisUser = JSON.parse(localStorage.theme).some(item => {
                 if (item.userName === name) {
