@@ -22,29 +22,29 @@
                             <Input v-model="userForm.name" ></Input>
                         </div>
                     </FormItem>
-                    <FormItem label="用户手机：" prop="cellphone" >
-                        <div style="display:inline-block;width:204px;">
-                            <Input v-model="userForm.cellphone" @on-keydown="hasChangePhone"></Input>
-                        </div>
-                        <div style="display:inline-block;position:relative;">
-                            <Button @click="getIdentifyCode" :disabled="canGetIdentifyCode">{{ gettingIdentifyCodeBtnContent }}</Button>
-                            <div class="own-space-input-identifycode-con" v-if="inputCodeVisible">
-                                <div style="background-color:white;z-index:110;margin:10px;">
-                                    <Input v-model="securityCode" placeholder="请填写短信验证码" ></Input>
-                                    <div style="margin-top:10px;text-align:right">
-                                        <Button type="ghost" @click="cancelInputCodeBox">取消</Button>
-                                        <Button type="primary" @click="submitCode" :loading="checkIdentifyCodeLoading">确定</Button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </FormItem>
-                    <FormItem label="公司：">
-                        <span>{{ userForm.company }}</span>
-                    </FormItem>
-                    <FormItem label="部门：">
-                        <span>{{ userForm.department }}</span>
-                    </FormItem>
+                    <!--<FormItem label="用户手机：" prop="cellphone" >-->
+                        <!--<div style="display:inline-block;width:204px;">-->
+                            <!--<Input v-model="userForm.cellphone" @on-keydown="hasChangePhone"></Input>-->
+                        <!--</div>-->
+                        <!--<div style="display:inline-block;position:relative;">-->
+                            <!--<Button @click="getIdentifyCode" :disabled="canGetIdentifyCode">{{ gettingIdentifyCodeBtnContent }}</Button>-->
+                            <!--<div class="own-space-input-identifycode-con" v-if="inputCodeVisible">-->
+                                <!--<div style="background-color:white;z-index:110;margin:10px;">-->
+                                    <!--<Input v-model="securityCode" placeholder="请填写短信验证码" ></Input>-->
+                                    <!--<div style="margin-top:10px;text-align:right">-->
+                                        <!--<Button type="ghost" @click="cancelInputCodeBox">取消</Button>-->
+                                        <!--<Button type="primary" @click="submitCode" :loading="checkIdentifyCodeLoading">确定</Button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</FormItem>-->
+                    <!--<FormItem label="公司：">-->
+                        <!--<span>{{ userForm.company }}</span>-->
+                    <!--</FormItem>-->
+                    <!--<FormItem label="部门：">-->
+                        <!--<span>{{ userForm.department }}</span>-->
+                    <!--</FormItem>-->
                     <FormItem label="登录密码：">
                         <Button type="text" size="small" @click="showEditPassword">修改密码</Button>
                     </FormItem>
@@ -77,6 +77,10 @@
 </template>
 
 <script>
+
+import Cookies from 'js-cookie';
+import commonUtil from "../../libs/commonUtil";
+
 export default {
     name: 'ownspace_index',
     data () {
@@ -97,6 +101,7 @@ export default {
         };
         return {
             userForm: {
+                id:'',
                 name: '',
                 cellphone: '',
                 company: '',
@@ -208,19 +213,35 @@ export default {
             this.editPasswordModal = false;
         },
         saveEditPass () {
+            let me = this;
             this.$refs['editPasswordForm'].validate((valid) => {
                 if (valid) {
-                    this.savePassLoading = true;
-                    // you can write ajax request here
+                    me.savePassLoading = true;
+                    commonUtil.doPost(me, "/user/updatePassword",
+                        {userId: me.userForm.id, oldPass : me.editPasswordForm.oldPass, newPass : me.editPasswordForm.newPass}).then(response => {
+                        let result = response.data;
+                        if(result.success){
+                            commonUtil.showMessage("修改成功，请重新登入", 4, me);
+                            me.$store.commit('logout', this);
+                            me.$router.push({
+                                name: 'login'
+                            });
+                        } else {
+                            commonUtil.showMessage(result.message, 3, me);
+                            me.savePassLoading = false;
+                        }
+                    });
                 }
             });
         },
         init () {
-            this.userForm.name = 'Lison';
-            this.userForm.cellphone = '17712345678';
-            this.initPhone = '17712345678';
-            this.userForm.company = 'TalkingData';
-            this.userForm.department = '可视化部门';
+            let curryUser = JSON.parse(Cookies.get('curryUser'));
+            this.userForm.name = curryUser.userName;
+            this.userForm.id = curryUser.id;
+            // this.userForm.cellphone = '17712345678';
+            // this.initPhone = '17712345678';
+            // this.userForm.company = 'TalkingData';
+            // this.userForm.department = '可视化部门';
         },
         cancelInputCodeBox () {
             this.inputCodeVisible = false;
@@ -240,20 +261,37 @@ export default {
             }
         },
         hasChangePhone () {
-            this.phoneHasChanged = true;
-            this.hasGetIdentifyCode = false;
-            this.identifyCodeRight = false;
+            // this.phoneHasChanged = true;
+            // this.hasGetIdentifyCode = false;
+            // this.identifyCodeRight = false;
         },
         saveInfoAjax () {
-            this.save_loading = true;
-            setTimeout(() => {
-                this.$Message.success('保存成功');
-                this.save_loading = false;
-            }, 1000);
+            let me = this;
+            me.save_loading = true;
+            commonUtil.doPost(me, '/user/editInfo', {userId: me.userForm.id, userName: me.userForm.name}).then(response => {
+                let result = response.data;
+                if (result.success) {
+                    let curryUser = JSON.parse(Cookies.get('curryUser'));
+                    curryUser.userName = me.userForm.name;
+                    Cookies.set('curryUser', curryUser);
+                    me.save_loading = false;
+                    commonUtil.showMessage("保存成功", 4, me)
+                }
+            })
         }
     },
     mounted () {
         this.init();
+    },
+    watch: {
+        "$route": {
+            handler(route){
+                const me = this;
+                if (route.name === 'ownspace_index'){
+                    me.init();
+                }
+            }
+        }
     }
 };
 </script>

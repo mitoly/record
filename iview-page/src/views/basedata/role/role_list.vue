@@ -55,7 +55,7 @@
 
 <script>
 	
-import commonUtil from '@/libs/commonUtil';
+// import commonUtil from '@/libs/commonUtil';
 import roleModel from "./role_model.vue";
 import permissionModel from "./role_permission.vue";
 

@@ -169,6 +169,45 @@ public class UserController extends BaseController {
 	}
 
 	/**
+	 * 修改密码
+	 * @param userId 用户Id
+	 * @param oldPass 旧密码
+	 * @param newPass 新密码
+	 * @return
+	 */
+	@PostMapping("/updatePassword")
+	public JsonObjectResult updatePassword(HttpServletRequest request, HttpServletResponse response,Integer userId, String oldPass, String newPass) {
+		UserVo userVo = userService.findUserById(userId);
+		if (userVo.getPassword().equals(oldPass)) {
+			UserVo currentUser = super.getCurrentUser(request, response);
+			userVo.setPassword(newPass);
+			userVo.setUpdateUser(currentUser.getId());
+			userVo.setUpdateTime(new Date());
+			userService.update(userVo);
+		} else {
+			return ActionUtil.sendResult("旧密码错误", false);
+		}
+		return ActionUtil.sendResult();
+	}
+
+	/**
+	 * 个人中心修改个人信息
+	 * @param userId 用户Id
+	 * @param userName 用户名称
+	 * @return
+	 */
+	@PostMapping("/editInfo")
+	public JsonObjectResult editInfo(HttpServletRequest request, HttpServletResponse response, Integer userId, String userName) {
+		UserVo currentUser = super.getCurrentUser(request, response);
+		UserVo userVo = userService.findUserById(userId);
+		userVo.setUserName(userName);
+		userVo.setUpdateUser(currentUser.getId());
+		userVo.setUpdateTime(new Date());
+		userService.update(userVo);
+		return ActionUtil.sendResult();
+	}
+
+	/**
 	 * 登入处理权限
 	 * @param tableMap
 	 * @param permissionTables
