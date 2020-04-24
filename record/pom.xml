@@ -86,13 +86,14 @@
 		    <version>5.1.21</version>
 		</dependency>
 		
-		<!-- 阿里巴巴连接池Druid -->
+		<!-- 阿里巴巴连接池Druid 改用hikari
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>1.1.8</version>
 		</dependency>
-		
+		-->
+
 		<!-- 添加 Freemarker 依赖 -->
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
@@ -178,6 +179,12 @@
 			<classifier>jdk15</classifier>
 		</dependency>
 
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit</artifactId>
+			<version>3.7.1.201504261725-r</version>
+			<optional>true</optional>
+		</dependency>
 
 	</dependencies>
 	
