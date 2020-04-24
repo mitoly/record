@@ -54,4 +54,18 @@ public class HelloWorldControlerTest {
                 .andDo(MockMvcResultHandlers.print());
     }
 
+
+//    public static void main(String[] args) {
+//        SupplierInfoService_Service service = new SupplierInfoService_Service();
+//        SupplierInfoService  infoService = service.getSupplierInfoServiceSOAP();
+//        try {
+//            int result = infoService.getProductionProcurementSupplierCount("", "",
+//                    "", "","ccc");
+//            System.out.println("显示返回值 ------ " + result);
+//        } catch (GetProductionProcurementSupplierCountFault getProductionProcurementSupplierCountFault) {
+//            getProductionProcurementSupplierCountFault.printStackTrace();
+//            System.out.printf("报错catch");
+//        }
+//    }
+
 }
