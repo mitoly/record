@@ -13,10 +13,9 @@ public class MathTest {
         }
         long now = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
         long nowl = System.currentTimeMillis();
-
 //        arr = bubbleSoft(arr); // 冒泡排序
-//        arr = quickSoft(arr, 0, arr.length-1); // 快速排序
-        arr = mergeSort(arr, 0, arr.length-1); // 并归排序
+        arr = quickSoft(arr, 0, arr.length-1); // 快速排序
+//        arr = mergeSort(arr, 0, arr.length-1); // 并归排序
         System.out.println(Arrays.toString(arr));
         System.out.println(LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli() - now + " ms");
         System.out.println(System.currentTimeMillis() - nowl + " ms");
@@ -29,7 +28,7 @@ public class MathTest {
         if (left >= right) {
             return arr;
         }
-        int temp = arr[left]; // 基准，比基准大的放左边，比基准小的放右边
+        int temp = arr[left]; // 基准，比基准大的放右边，比基准小的放左边
         int i = left;
         int j = right;
         while (i < j) {
